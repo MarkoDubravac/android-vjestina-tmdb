@@ -1,7 +1,10 @@
 package agency.five.codebase.android.movieapp.ui.main
 
+import agency.five.codebase.android.movieapp.ui.component.ActorCard
+import agency.five.codebase.android.movieapp.ui.component.ActorCardViewState
 import agency.five.codebase.android.movieapp.ui.theme.MovieAppTheme
 import android.os.Bundle
+import android.view.Surface
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
