@@ -2,26 +2,23 @@ package agency.five.codebase.android.movieapp.ui.component
 
 import agency.five.codebase.android.movieapp.R
 import agency.five.codebase.android.movieapp.mock.MoviesMock
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
+import agency.five.codebase.android.movieapp.ui.theme.Shapes
+import agency.five.codebase.android.movieapp.ui.theme.Typography
+import agency.five.codebase.android.movieapp.ui.theme.spacing
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-
 
 
 data class ActorCardViewState(
@@ -32,40 +29,40 @@ data class ActorCardViewState(
 
 @Composable
 fun ActorCard(
-    actorCardViewState: ActorCardViewState,
-    modifier: Modifier = Modifier
-){
+    modifier: Modifier = Modifier,
+    actorCardViewState: ActorCardViewState
+) {
     Card(
-        modifier = modifier
-            .size(width = 150.dp, height = 250.dp)
-            .padding(10.dp)
-            .clip(RoundedCornerShape(15.dp)),
-        elevation = 10.dp,
+        elevation = dimensionResource(id = R.dimen.card_elevation),
+        modifier = modifier,
+        shape = Shapes.large
     )
     {
         Column {
             AsyncImage(
                 model = actorCardViewState.imageUrl,
-                contentDescription = null,
-                modifier = modifier
-                    .height(130.dp),
-                contentScale = ContentScale.Crop
-            )
+                contentDescription = actorCardViewState.name,
+                modifier = Modifier
+                    .height(dimensionResource(id = R.dimen.actor_image_height)),
+                contentScale = ContentScale.Crop,
+
+                )
             Text(
-                modifier = modifier
-                    .padding(6.dp),
                 text = actorCardViewState.name,
-                fontSize = 16.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Bold
+                style = Typography.h3,
+                modifier = Modifier
+                    .padding(MaterialTheme.spacing.small),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+
             )
             Text(
                 text = actorCardViewState.character,
-                fontSize = 14.sp,
-                color = Color.Black,
-                modifier = modifier
-                    .padding(5.dp)
-                    .alpha(0.5f)
+                style = Typography.h4,
+                modifier = Modifier
+                    .padding(MaterialTheme.spacing.small),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -80,7 +77,13 @@ private fun ActorCardPreview() {
         imageUrl = actor.imageUrl.toString(),
         character = actor.character
     )
-    ActorCard(actorCardViewState = actorCardViewState)
+    ActorCard(
+        actorCardViewState = actorCardViewState,
+        modifier = Modifier
+            .width(dimensionResource(id = R.dimen.actor_card_width))
+            .height(dimensionResource(id = R.dimen.actor_card_height))
+            .padding(MaterialTheme.spacing.small),
+    )
 }
 
 

@@ -27,6 +27,7 @@ private val LightColorPalette = lightColors(
     onSurface = Color.Black
 )
 
+
 @Composable
 fun MovieAppTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
