@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 
 data class MovieCardViewState(
@@ -23,15 +22,15 @@ data class MovieCardViewState(
 
 @Composable
 fun MovieCard(
-    modifier: Modifier = Modifier,
     movieCardViewState: MovieCardViewState,
-    onMovieItemClick: () -> Unit = {}
+    modifier: Modifier = Modifier,
+    onMovieItemClick: () -> Unit = {},
+    onLikeButtonClick: () -> Unit = {}
 ) {
     Card(
-        modifier = modifier
-            .clickable { onMovieItemClick() },
+        modifier = modifier.clickable { onMovieItemClick() },
         shape = Shapes.large,
-        elevation = 5.dp
+        elevation = dimensionResource(id = R.dimen.card_elevation)
     ) {
         Box {
             AsyncImage(
@@ -41,16 +40,15 @@ fun MovieCard(
                 modifier = Modifier.fillMaxSize()
             )
             FavoriteButton(
-                modifier = Modifier
-                    .padding(MaterialTheme.spacing.small),
+                modifier = Modifier.padding(MaterialTheme.spacing.small),
                 isFavorite = false,
-                onClick = { addToFavorites() }
+                onClick = onLikeButtonClick
             )
         }
     }
 }
 
-@Preview
+@Preview(name = "phone", device = "spec:shape=Normal,width=360,height=640,unit=dp,dpi=480")
 @Composable
 fun MovieCardPreview() {
     val movie = MoviesMock.getMoviesList().first()
@@ -60,7 +58,8 @@ fun MovieCardPreview() {
     )
 
     MovieCard(
-        movieCardViewState = movieCardViewState, modifier = Modifier
+        movieCardViewState = movieCardViewState,
+        modifier = Modifier
             .padding(MaterialTheme.spacing.small)
             .width(dimensionResource(id = R.dimen.movie_card_width))
             .height(dimensionResource(id = R.dimen.movie_card_height))

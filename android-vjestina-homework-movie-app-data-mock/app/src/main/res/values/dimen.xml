@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="actor_image_height">130dp</dimen>
-    <dimen name="actor_card_width">150dp</dimen>
+    <dimen name="actor_card_width">160dp</dimen>
     <dimen name="actor_card_height">260dp</dimen>
     <dimen name="movie_card_width">150dp</dimen>
     <dimen name="movie_card_height">260dp</dimen>
     <dimen name="icon_size">32dp</dimen>
-    <dimen name="card_elevation">8dp</dimen>
-    <dimen name="progress_circle_radius">25dp</dimen>
+    <dimen name="card_elevation">5dp</dimen>
+    <dimen name="progress_circle_diameter">50dp</dimen>
 </resources>

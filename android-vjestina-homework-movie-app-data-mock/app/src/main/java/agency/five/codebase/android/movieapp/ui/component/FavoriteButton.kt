@@ -19,9 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun FavoriteButton(
-    modifier: Modifier = Modifier,
-    isFavorite: Boolean,
-    onClick: () -> Unit
+    isFavorite: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier
 ) {
     Image(
         painter = painterResource(id = if (isFavorite) R.drawable.liked else R.drawable.not_liked),
@@ -38,16 +36,10 @@ fun FavoriteButton(
     )
 }
 
-fun addToFavorites() {
-    //TODO
-}
-
-@Preview
+@Preview(name = "phone", device = "spec:shape=Normal,width=360,height=640,unit=dp,dpi=480")
 @Composable
 fun FavoriteButtonPreview() {
-    FavoriteButton(modifier = Modifier
-        .size(dimensionResource(id = R.dimen.icon_size)),
+    FavoriteButton(modifier = Modifier.size(dimensionResource(id = R.dimen.icon_size)),
         isFavorite = false,
-        onClick = { addToFavorites() }
-    )
+        onClick = { })
 }

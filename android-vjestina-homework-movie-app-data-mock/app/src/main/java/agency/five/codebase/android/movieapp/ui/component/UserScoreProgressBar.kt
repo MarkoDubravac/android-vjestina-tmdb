@@ -7,6 +7,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
@@ -28,9 +29,8 @@ private const val ANIMATION_DURATION = 1000
 
 @Composable
 fun UserScoreProgressBar(
-    modifier: Modifier = Modifier,
     score: Float,
-    radius: Dp = dimensionResource(id = R.dimen.progress_circle_radius),
+    modifier: Modifier = Modifier,
     color: Color = Color.Green,
     strokeWidth: Dp = MaterialTheme.spacing.extraSmall,
     animDuration: Int = ANIMATION_DURATION,
@@ -38,8 +38,7 @@ fun UserScoreProgressBar(
 
     var animationPlayed by remember { mutableStateOf(false) }
     val curPercentage = animateFloatAsState(
-        targetValue = if (animationPlayed) score else 0f,
-        animationSpec = tween(
+        targetValue = if (animationPlayed) score else 0f, animationSpec = tween(
             durationMillis = animDuration
         )
     )
@@ -48,12 +47,11 @@ fun UserScoreProgressBar(
     }
 
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier.size(radius * 2f)
+        contentAlignment = Alignment.Center, modifier = modifier
     ) {
         Canvas(
             modifier = Modifier
-                .size(radius * 2f)
+                .fillMaxSize()
                 .padding(MaterialTheme.spacing.extraSmall)
         ) {
             drawArc(
@@ -65,14 +63,16 @@ fun UserScoreProgressBar(
             )
         }
         Text(
-            text = (score * PERCENTAGE_FACTOR).toString(),
-            style = Typography.button
+            text = (score * PERCENTAGE_FACTOR).toString(), style = Typography.button
         )
     }
 }
 
-@Preview
+@Preview(name = "phone", device = "spec:shape=Normal,width=360,height=640,unit=dp,dpi=480")
 @Composable
 fun UserScoreProgressBarPreview() {
-    UserScoreProgressBar(score = 0.57f)
+    UserScoreProgressBar(
+        score = 0.6f,
+        modifier = Modifier.size(dimensionResource(id = R.dimen.progress_circle_diameter))
+    )
 }

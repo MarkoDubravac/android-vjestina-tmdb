@@ -19,18 +19,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 
 data class CrewItemViewState(
-    val name: String,
-    val job: String
+    val name: String, val job: String
 )
 
 @Composable
 fun CrewItem(
-    modifier: Modifier = Modifier,
-    crewItemViewState: CrewItemViewState
+    crewItemViewState: CrewItemViewState, modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
-            .wrapContentSize()
+        modifier = modifier.wrapContentSize()
     ) {
         Text(
             text = crewItemViewState.name,
@@ -53,11 +50,13 @@ fun CrewItem(
 private fun CrewItemPreview() {
     val crewman = MoviesMock.getCrewman()
     val crewItemViewState = CrewItemViewState(
-        crewman.name,
-        crewman.job
+        crewman.name, crewman.job
     )
-    CrewItem(crewItemViewState = crewItemViewState, modifier = Modifier
-        .clip(Shapes.medium)
-        .background(color = Gray600)
-        .padding(MaterialTheme.spacing.small))
+    CrewItem(
+        crewItemViewState = crewItemViewState,
+        modifier = Modifier
+            .clip(Shapes.medium)
+            .background(color = Gray600)
+            .padding(MaterialTheme.spacing.small)
+    )
 }

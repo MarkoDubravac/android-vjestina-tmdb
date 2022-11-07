@@ -29,21 +29,18 @@ data class ActorCardViewState(
 
 @Composable
 fun ActorCard(
-    modifier: Modifier = Modifier,
-    actorCardViewState: ActorCardViewState
+    actorCardViewState: ActorCardViewState, modifier: Modifier = Modifier
 ) {
     Card(
         elevation = dimensionResource(id = R.dimen.card_elevation),
         modifier = modifier,
         shape = Shapes.large
-    )
-    {
+    ) {
         Column {
             AsyncImage(
                 model = actorCardViewState.imageUrl,
                 contentDescription = actorCardViewState.name,
-                modifier = Modifier
-                    .height(dimensionResource(id = R.dimen.actor_image_height)),
+                modifier = Modifier.weight(4f),
                 contentScale = ContentScale.Crop,
 
                 )
@@ -51,7 +48,8 @@ fun ActorCard(
                 text = actorCardViewState.name,
                 style = Typography.h3,
                 modifier = Modifier
-                    .padding(MaterialTheme.spacing.small),
+                    .padding(MaterialTheme.spacing.small)
+                    .weight(1.5f),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
 
@@ -60,7 +58,8 @@ fun ActorCard(
                 text = actorCardViewState.character,
                 style = Typography.h4,
                 modifier = Modifier
-                    .padding(MaterialTheme.spacing.small),
+                    .padding(MaterialTheme.spacing.small)
+                    .weight(1f),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
@@ -68,14 +67,12 @@ fun ActorCard(
     }
 }
 
-@Preview
+@Preview(name = "phone", device = "spec:shape=Normal,width=360,height=640,unit=dp,dpi=480")
 @Composable
 private fun ActorCardPreview() {
     val actor = MoviesMock.getActor()
     val actorCardViewState = ActorCardViewState(
-        name = actor.name,
-        imageUrl = actor.imageUrl.toString(),
-        character = actor.character
+        name = actor.name, imageUrl = actor.imageUrl.toString(), character = actor.character
     )
     ActorCard(
         actorCardViewState = actorCardViewState,
