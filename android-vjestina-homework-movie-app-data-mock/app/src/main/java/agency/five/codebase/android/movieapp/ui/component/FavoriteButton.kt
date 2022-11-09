@@ -16,13 +16,11 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 
-
 @Composable
 fun FavoriteButton(
     isFavorite: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier
 ) {
-    Image(
-        painter = painterResource(id = if (isFavorite) R.drawable.liked else R.drawable.not_liked),
+    Image(painter = painterResource(id = if (isFavorite) R.drawable.liked else R.drawable.not_liked),
         contentDescription = "Liked icon",
         modifier = modifier
             .clickable {
@@ -32,8 +30,7 @@ fun FavoriteButton(
                 color = ButtonBlue.copy(alpha = 0.6f),
                 shape = CircleShape,
             )
-            .padding(MaterialTheme.spacing.small),
-    )
+            .padding(MaterialTheme.spacing.small))
 }
 
 @Preview(name = "phone", device = "spec:shape=Normal,width=360,height=640,unit=dp,dpi=480")

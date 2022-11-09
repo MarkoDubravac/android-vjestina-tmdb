@@ -33,7 +33,7 @@ fun UserScoreProgressBar(
     modifier: Modifier = Modifier,
     color: Color = Color.Green,
     strokeWidth: Dp = MaterialTheme.spacing.extraSmall,
-    animDuration: Int = ANIMATION_DURATION,
+    animDuration: Int = ANIMATION_DURATION
 ) {
 
     var animationPlayed by remember { mutableStateOf(false) }
@@ -45,7 +45,6 @@ fun UserScoreProgressBar(
     LaunchedEffect(key1 = true) {
         animationPlayed = true
     }
-
     Box(
         contentAlignment = Alignment.Center, modifier = modifier
     ) {

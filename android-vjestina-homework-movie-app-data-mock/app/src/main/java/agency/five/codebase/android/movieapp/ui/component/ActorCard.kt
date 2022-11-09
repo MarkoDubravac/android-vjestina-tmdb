@@ -20,11 +20,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 
-
 data class ActorCardViewState(
-    val imageUrl: String,
-    val name: String,
-    val character: String,
+    val imageUrl: String, val name: String, val character: String
 )
 
 @Composable
@@ -41,9 +38,8 @@ fun ActorCard(
                 model = actorCardViewState.imageUrl,
                 contentDescription = actorCardViewState.name,
                 modifier = Modifier.weight(4f),
-                contentScale = ContentScale.Crop,
-
-                )
+                contentScale = ContentScale.Crop
+            )
             Text(
                 text = actorCardViewState.name,
                 style = Typography.h3,
@@ -52,7 +48,6 @@ fun ActorCard(
                     .weight(1.5f),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
-
             )
             Text(
                 text = actorCardViewState.character,
@@ -79,7 +74,7 @@ private fun ActorCardPreview() {
         modifier = Modifier
             .width(dimensionResource(id = R.dimen.actor_card_width))
             .height(dimensionResource(id = R.dimen.actor_card_height))
-            .padding(MaterialTheme.spacing.small),
+            .padding(MaterialTheme.spacing.small)
     )
 }
 

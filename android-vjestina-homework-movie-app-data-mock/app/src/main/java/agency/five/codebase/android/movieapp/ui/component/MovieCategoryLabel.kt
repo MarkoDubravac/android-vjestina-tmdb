@@ -29,7 +29,7 @@ data class MovieCategoryLabelViewState(
 fun MovieCategoryLabel(
     movieCategoryLabelViewState: MovieCategoryLabelViewState,
     modifier: Modifier = Modifier,
-    onTextClick: () -> Unit = {},
+    onTextClick: () -> Unit = {}
 ) {
     Column(modifier = modifier
         .width(IntrinsicSize.Max)
@@ -41,7 +41,6 @@ fun MovieCategoryLabel(
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
-
             Divider(
                 color = Color.Black, thickness = 2.dp, modifier = Modifier.fillMaxWidth()
             )

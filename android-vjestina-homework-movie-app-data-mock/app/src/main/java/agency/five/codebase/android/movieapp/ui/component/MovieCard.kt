@@ -16,8 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 
 data class MovieCardViewState(
-    val imageUrl: String,
-    val isFavorite: Boolean,
+    val imageUrl: String?, val isFavorite: Boolean
 )
 
 @Composable
@@ -53,10 +52,8 @@ fun MovieCard(
 fun MovieCardPreview() {
     val movie = MoviesMock.getMoviesList().first()
     val movieCardViewState = MovieCardViewState(
-        imageUrl = movie.imageUrl.toString(),
-        isFavorite = false,
+        imageUrl = movie.imageUrl.toString(), isFavorite = false
     )
-
     MovieCard(
         movieCardViewState = movieCardViewState,
         modifier = Modifier
