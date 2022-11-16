@@ -21,24 +21,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 
 data class ActorCardViewState(
-    val imageUrl: String, val name: String, val character: String
+    val imageUrl: String,
+    val name: String,
+    val character: String,
 )
 
 @Composable
 fun ActorCard(
-    actorCardViewState: ActorCardViewState, modifier: Modifier = Modifier
+    actorCardViewState: ActorCardViewState,
+    modifier: Modifier = Modifier,
 ) {
     Card(
         elevation = dimensionResource(id = R.dimen.card_elevation),
         modifier = modifier,
-        shape = Shapes.large
+        shape = Shapes.large,
     ) {
         Column {
             AsyncImage(
                 model = actorCardViewState.imageUrl,
                 contentDescription = actorCardViewState.name,
                 modifier = Modifier.weight(4f),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Crop,
             )
             Text(
                 text = actorCardViewState.name,
@@ -47,7 +50,7 @@ fun ActorCard(
                     .padding(MaterialTheme.spacing.small)
                     .weight(1.5f),
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
             Text(
                 text = actorCardViewState.character,
@@ -56,7 +59,7 @@ fun ActorCard(
                     .padding(MaterialTheme.spacing.small)
                     .weight(1f),
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
         }
     }
@@ -67,14 +70,16 @@ fun ActorCard(
 private fun ActorCardPreview() {
     val actor = MoviesMock.getActor()
     val actorCardViewState = ActorCardViewState(
-        name = actor.name, imageUrl = actor.imageUrl.toString(), character = actor.character
+        name = actor.name,
+        imageUrl = actor.imageUrl.toString(),
+        character = actor.character,
     )
     ActorCard(
         actorCardViewState = actorCardViewState,
         modifier = Modifier
             .width(dimensionResource(id = R.dimen.actor_card_width))
             .height(dimensionResource(id = R.dimen.actor_card_height))
-            .padding(MaterialTheme.spacing.small)
+            .padding(MaterialTheme.spacing.small),
     )
 }
 

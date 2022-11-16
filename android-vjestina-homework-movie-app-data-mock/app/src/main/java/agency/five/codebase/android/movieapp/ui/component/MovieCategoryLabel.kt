@@ -22,27 +22,33 @@ sealed class MovieCategoryLabelTextViewState {
 }
 
 data class MovieCategoryLabelViewState(
-    val itemId: Int, val isSelected: Boolean, val categoryText: MovieCategoryLabelTextViewState
+    val id: Int,
+    val isSelected: Boolean,
+    val categoryText: MovieCategoryLabelTextViewState,
 )
 
 @Composable
 fun MovieCategoryLabel(
     movieCategoryLabelViewState: MovieCategoryLabelViewState,
     modifier: Modifier = Modifier,
-    onTextClick: () -> Unit = {}
+    onTextClick: () -> Unit = {},
 ) {
-    Column(modifier = modifier
-        .width(IntrinsicSize.Max)
-        .clickable { onTextClick() }) {
+    Column(
+        modifier = modifier
+            .width(IntrinsicSize.Max)
+            .clickable { onTextClick() },
+    ) {
         if (movieCategoryLabelViewState.isSelected) {
             Text(
                 text = selectInputType(movieCategoryLabelViewState = movieCategoryLabelViewState),
                 style = Typography.h3,
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
             Divider(
-                color = Color.Black, thickness = 2.dp, modifier = Modifier.fillMaxWidth()
+                color = Color.Black,
+                thickness = 2.dp,
+                modifier = Modifier.fillMaxWidth(),
             )
         } else {
             UnselectedText(movieCategoryLabelViewState = movieCategoryLabelViewState)
@@ -52,7 +58,8 @@ fun MovieCategoryLabel(
 
 @Composable
 fun UnselectedText(
-    movieCategoryLabelViewState: MovieCategoryLabelViewState, modifier: Modifier = Modifier
+    movieCategoryLabelViewState: MovieCategoryLabelViewState,
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = selectInputType(movieCategoryLabelViewState = movieCategoryLabelViewState),
@@ -60,7 +67,7 @@ fun UnselectedText(
         fontSize = 16.sp,
         maxLines = 2,
         overflow = TextOverflow.Ellipsis,
-        modifier = modifier
+        modifier = modifier,
     )
 }
 

@@ -19,12 +19,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 
 data class CrewItemViewState(
-    val name: String, val job: String
+    val name: String,
+    val job: String,
 )
 
 @Composable
 fun CrewItem(
-    crewItemViewState: CrewItemViewState, modifier: Modifier = Modifier
+    crewItemViewState: CrewItemViewState,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.wrapContentSize()
@@ -33,14 +35,14 @@ fun CrewItem(
             text = crewItemViewState.name,
             style = Typography.h3,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
         )
         Text(
             text = crewItemViewState.job,
             style = Typography.h4,
             color = Color.Black,
             maxLines = 2,
-            overflow = TextOverflow.Ellipsis
+            overflow = TextOverflow.Ellipsis,
         )
     }
 }
@@ -57,6 +59,6 @@ private fun CrewItemPreview() {
         modifier = Modifier
             .clip(Shapes.medium)
             .background(color = Gray600)
-            .padding(MaterialTheme.spacing.small)
+            .padding(MaterialTheme.spacing.small),
     )
 }

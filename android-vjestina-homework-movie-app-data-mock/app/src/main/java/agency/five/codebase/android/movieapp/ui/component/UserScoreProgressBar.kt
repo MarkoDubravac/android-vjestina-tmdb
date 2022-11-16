@@ -32,8 +32,9 @@ fun UserScoreProgressBar(
     score: Float,
     modifier: Modifier = Modifier,
     color: Color = Color.Green,
+    textColor: Color = Color.Black,
     strokeWidth: Dp = MaterialTheme.spacing.extraSmall,
-    animDuration: Int = ANIMATION_DURATION
+    animDuration: Int = ANIMATION_DURATION,
 ) {
 
     var animationPlayed by remember { mutableStateOf(false) }
@@ -46,7 +47,8 @@ fun UserScoreProgressBar(
         animationPlayed = true
     }
     Box(
-        contentAlignment = Alignment.Center, modifier = modifier
+        contentAlignment = Alignment.Center,
+        modifier = modifier,
     ) {
         Canvas(
             modifier = Modifier
@@ -62,7 +64,9 @@ fun UserScoreProgressBar(
             )
         }
         Text(
-            text = (score * PERCENTAGE_FACTOR).toString(), style = Typography.button
+            text = (score * PERCENTAGE_FACTOR).toString(),
+            style = Typography.button,
+            color = textColor
         )
     }
 }

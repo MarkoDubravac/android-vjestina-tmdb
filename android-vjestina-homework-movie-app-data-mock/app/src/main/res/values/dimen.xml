@@ -2,9 +2,14 @@
 <resources>
     <dimen name="actor_card_width">160dp</dimen>
     <dimen name="actor_card_height">260dp</dimen>
-    <dimen name="movie_card_width">150dp</dimen>
-    <dimen name="movie_card_height">260dp</dimen>
+    <dimen name="movie_card_width">120dp</dimen>
+    <dimen name="movie_card_height">220dp</dimen>
     <dimen name="icon_size">32dp</dimen>
+    <dimen name="back_icon_size">28dp</dimen>
     <dimen name="card_elevation">5dp</dimen>
     <dimen name="progress_circle_diameter">50dp</dimen>
+    <dimen name="details_screen_image_height">300dp</dimen>
+    <dimen name="crew_grid_height">120dp</dimen>
+    <dimen name="tob_bar_height">60dp</dimen>
+    <dimen name="nav_icon_size">24dp</dimen>
 </resources>
