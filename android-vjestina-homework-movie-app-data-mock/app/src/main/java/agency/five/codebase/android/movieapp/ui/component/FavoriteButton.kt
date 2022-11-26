@@ -19,8 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 @Composable
 fun FavoriteButton(
     isFavorite: Boolean,
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onClick: () -> Unit,
 ) {
     Image(
         painter = painterResource(id = if (isFavorite) R.drawable.liked else R.drawable.not_liked),

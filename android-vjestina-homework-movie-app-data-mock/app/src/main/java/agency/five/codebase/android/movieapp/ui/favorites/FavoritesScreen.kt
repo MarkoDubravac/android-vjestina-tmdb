@@ -45,11 +45,12 @@ fun FavoritesRoute(
 @Composable
 fun FavoritesScreen(
     favoritesViewState: FavoritesViewState,
+    modifier: Modifier = Modifier,
     onNavigateToMovieDetails: (Int) -> Unit,
     onLikeButtonClick: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
-    LazyVerticalGrid(modifier = modifier.padding(MaterialTheme.spacing.small),
+    LazyVerticalGrid(
+        modifier = modifier.padding(MaterialTheme.spacing.small),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small),
         horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmallToSmall),
         columns = GridCells.Fixed(3),
@@ -68,7 +69,8 @@ fun FavoritesScreen(
                     modifier = modifier.height(dimensionResource(id = R.dimen.movie_card_height))
                 )
             }
-        })
+        },
+    )
 }
 
 @Preview

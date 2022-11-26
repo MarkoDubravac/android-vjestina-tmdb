@@ -39,9 +39,15 @@ val movieDetailsViewState = movieDetailsMapper.toMovieDetailsViewState(MoviesMoc
 
 @Composable
 fun MovieDetailsRoute() {
-    val movieDetailsViewState by remember { mutableStateOf(movieDetailsViewState) }
+    val movieDetailsViewState by remember {
+        mutableStateOf(
+            movieDetailsViewState
+        )
+    }
     MovieDetailsScreen(
-        movieDetailsViewState = movieDetailsViewState.copy(isFavorite = !movieDetailsViewState.isFavorite),
+        movieDetailsViewState = movieDetailsViewState.copy(
+            isFavorite = !movieDetailsViewState.isFavorite
+        ),
     )
 }
 
@@ -50,20 +56,27 @@ fun MovieDetailsScreen(
     movieDetailsViewState: MovieDetailsViewState,
     modifier: Modifier = Modifier,
 ) {
-    LazyColumn(modifier = modifier, content = {
-        item {
-            MovieImageDetails(
-                movieDetailsViewState = movieDetailsViewState,
-                modifier = Modifier.height(dimensionResource(id = R.dimen.details_screen_image_height)),
-            )
-        }
-        item {
-            OverviewDetails(movieDetailsViewState = movieDetailsViewState)
-        }
-        item {
-            TopBilledDetails(movieDetailsViewState = movieDetailsViewState)
-        }
-    })
+    LazyColumn(
+        modifier = modifier,
+        content = {
+            item {
+                MovieImageDetails(
+                    movieDetailsViewState = movieDetailsViewState,
+                    modifier = Modifier.height(dimensionResource(id = R.dimen.details_screen_image_height)),
+                )
+            }
+            item {
+                OverviewDetails(
+                    movieDetailsViewState = movieDetailsViewState
+                )
+            }
+            item {
+                TopBilledDetails(
+                    movieDetailsViewState = movieDetailsViewState
+                )
+            }
+        },
+    )
 }
 
 @Composable
@@ -95,7 +108,9 @@ fun MovieImageDetails(
                     color = Color.White,
                     modifier = Modifier
                         .wrapContentSize()
-                        .align(alignment = Alignment.CenterVertically),
+                        .align(
+                            alignment = Alignment.CenterVertically
+                        ),
                 )
             }
             Text(
@@ -116,7 +131,9 @@ fun OverviewDetails(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.padding(MaterialTheme.spacing.small),
+        modifier = modifier.padding(
+            MaterialTheme.spacing.small
+        ),
     ) {
         Text(
             text = stringResource(id = R.string.overview),
@@ -131,12 +148,20 @@ fun OverviewDetails(
         )
         LazyHorizontalGrid(
             rows = GridCells.Fixed(2),
-            modifier = Modifier.height(dimensionResource(id = R.dimen.crew_grid_height)),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
+            modifier = Modifier.height(
+                dimensionResource(id = R.dimen.crew_grid_height)
+            ),
+            horizontalArrangement = Arrangement.spacedBy(
+                MaterialTheme.spacing.medium
+            ),
+            verticalArrangement = Arrangement.spacedBy(
+                MaterialTheme.spacing.medium
+            ),
             content = {
                 itemsIndexed(movieDetailsViewState.crew) { _, item ->
-                    CrewItem(crewItemViewState = item.crewItemViewState)
+                    CrewItem(
+                        crewItemViewState = item.crewItemViewState
+                    )
                 }
             },
         )
@@ -149,15 +174,21 @@ fun TopBilledDetails(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.padding(MaterialTheme.spacing.small),
+        modifier = modifier.padding(
+            MaterialTheme.spacing.small
+        ),
     ) {
         Text(
             text = stringResource(id = R.string.top_billed_cast),
             style = Typography.h3,
         )
         LazyRow(
-            contentPadding = PaddingValues(vertical = MaterialTheme.spacing.small),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmallToSmall),
+            contentPadding = PaddingValues(
+                vertical = MaterialTheme.spacing.small
+            ),
+            horizontalArrangement = Arrangement.spacedBy(
+                MaterialTheme.spacing.extraSmallToSmall
+            ),
             content = {
                 items(movieDetailsViewState.cast.size) { index ->
                     ActorCard(
@@ -176,6 +207,8 @@ fun TopBilledDetails(
 @Composable
 fun MovieDetailsScreenPreview() {
     MovieAppTheme {
-        MovieDetailsScreen(movieDetailsViewState = movieDetailsViewState)
+        MovieDetailsScreen(
+            movieDetailsViewState = movieDetailsViewState
+        )
     }
 }

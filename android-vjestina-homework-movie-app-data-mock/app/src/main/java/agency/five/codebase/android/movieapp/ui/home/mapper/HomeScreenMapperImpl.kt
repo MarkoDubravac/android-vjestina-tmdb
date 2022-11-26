@@ -13,39 +13,30 @@ class HomeScreenMapperImpl : HomeScreenMapper {
         movieCategories: List<MovieCategory>,
         selectedMovieCategory: MovieCategory,
         movies: List<Movie>,
-    ): HomeMovieCategoryViewState {
-        return HomeMovieCategoryViewState(
-            movieCategories = movieCategories.map {
-                toMovieCategoryLabelViewState(
-                    movieCategory = it,
-                    selectedMovieCategory,
-                )
-            },
-            movies = movies.map { toHomeMovieViewState(it) },
-        )
-    }
+    ) = HomeMovieCategoryViewState(
+        movieCategories = movieCategories.map {
+            toMovieCategoryLabelViewState(
+                movieCategory = it,
+                selectedMovieCategory,
+            )
+        },
+        movies = movies.map { toHomeMovieViewState(it) },
+    )
 
-    private fun toHomeMovieViewState(movie: Movie): HomeMovieViewState {
-        return HomeMovieViewState(
-            id = movie.id,
-            movieCardViewState = MovieCardViewState(
-                imageUrl = movie.imageUrl,
-                isFavorite = movie.isFavorite,
-            ),
-        )
-    }
+    private fun toHomeMovieViewState(movie: Movie) = HomeMovieViewState(
+        id = movie.id,
+        movieCardViewState = MovieCardViewState(
+            imageUrl = movie.imageUrl,
+            isFavorite = movie.isFavorite,
+        ),
+    )
 
     private fun toMovieCategoryLabelViewState(
         movieCategory: MovieCategory,
         selectedMovieCategory: MovieCategory,
-    ): MovieCategoryLabelViewState {
-        return MovieCategoryLabelViewState(
-            id = movieCategory.ordinal,
-            isSelected = movieCategory == selectedMovieCategory,
-            categoryText = MovieCategoryLabelTextViewState.InputAsResourceState(movieCategory.textRes),
-        )
-    }
+    ) = MovieCategoryLabelViewState(
+        id = movieCategory.ordinal,
+        isSelected = movieCategory == selectedMovieCategory,
+        categoryText = MovieCategoryLabelTextViewState.InputAsResourceState(movieCategory.textRes),
+    )
 }
-
-
-

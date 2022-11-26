@@ -50,11 +50,19 @@ val upcomingCategoryViewState = homeScreenMapper.toHomeMovieCategoryViewState(
 
 @Composable
 fun HomeRoute(
-    onNavigateToMovieDetails: (Int) -> Unit,
+    onNavigateToMovieDetails: (
+        Int
+    ) -> Unit,
 ) {
-    var popularCategoryViewState by remember { mutableStateOf(popularCategoryViewState) }
-    var nowPlayingViewState by remember { mutableStateOf(nowPlayingCategoryViewState) }
-    var upcomingViewState by remember { mutableStateOf(upcomingCategoryViewState) }
+    var popularCategoryViewState by remember {
+        mutableStateOf(popularCategoryViewState)
+    }
+    var nowPlayingViewState by remember {
+        mutableStateOf(nowPlayingCategoryViewState)
+    }
+    var upcomingViewState by remember {
+        mutableStateOf(upcomingCategoryViewState)
+    }
     HomeScreen(
         popularCategoryViewState = popularCategoryViewState,
         nowPlayingViewState = nowPlayingViewState,
@@ -92,11 +100,17 @@ fun HomeScreen(
     nowPlayingViewState: HomeMovieCategoryViewState,
     upcomingViewState: HomeMovieCategoryViewState,
     modifier: Modifier = Modifier,
-    onCategoryClick: (MovieCategoryLabelViewState) -> Unit,
+    onCategoryClick: (
+        MovieCategoryLabelViewState
+    ) -> Unit,
+    onNavigateToMovieDetails: (
+        Int
+    ) -> Unit,
     onLikeButtonClick: () -> Unit,
-    onNavigateToMovieDetails: (Int) -> Unit,
 ) {
-    LazyColumn(modifier = modifier) {
+    LazyColumn(
+        modifier = modifier,
+    ) {
         item {
             MoviesInCategory(
                 homeMovieCategoryViewState = popularCategoryViewState,
@@ -131,40 +145,57 @@ fun HomeScreen(
 fun MoviesInCategory(
     homeMovieCategoryViewState: HomeMovieCategoryViewState,
     title: String,
-    onCategoryClick: (MovieCategoryLabelViewState) -> Unit,
-    onLikeButtonClick: () -> Unit,
-    onNavigateToMovieDetails: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    onCategoryClick: (
+        MovieCategoryLabelViewState
+    ) -> Unit,
+    onNavigateToMovieDetails: (
+        Int
+    ) -> Unit,
+    onLikeButtonClick: () -> Unit,
 ) {
     Column(
-        modifier = modifier.padding(MaterialTheme.spacing.small),
+        modifier = modifier.padding(
+            MaterialTheme.spacing.small,
+        ),
     ) {
         Text(
-            text = title, style = Typography.h3
+            text = title,
+            style = Typography.h3,
         )
         LazyRow(
             contentPadding = PaddingValues(vertical = MaterialTheme.spacing.small),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmallToSmall),
+            horizontalArrangement = Arrangement.spacedBy(
+                MaterialTheme.spacing.extraSmallToSmall
+            ),
             content = {
                 itemsIndexed(homeMovieCategoryViewState.movieCategories) { _, item ->
                     MovieCategoryLabel(
                         movieCategoryLabelViewState = item,
-                        onTextClick = { onCategoryClick(item) },
+                        onTextClick = {
+                            onCategoryClick(item)
+                        },
                     )
                 }
             },
         )
         LazyRow(
             contentPadding = PaddingValues(vertical = MaterialTheme.spacing.small),
-            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmallToSmall),
+            horizontalArrangement = Arrangement.spacedBy(
+                MaterialTheme.spacing.extraSmallToSmall
+            ),
             content = {
                 itemsIndexed(homeMovieCategoryViewState.movies) { _, item ->
                     MovieCard(
                         movieCardViewState = item.movieCardViewState,
                         onLikeButtonClick = onLikeButtonClick,
                         modifier = Modifier
-                            .width(dimensionResource(id = R.dimen.movie_card_width))
-                            .height(dimensionResource(id = R.dimen.movie_card_height)),
+                            .width(
+                                dimensionResource(id = R.dimen.movie_card_width)
+                            )
+                            .height(
+                                dimensionResource(id = R.dimen.movie_card_height)
+                            ),
                         onMovieItemClick = { onNavigateToMovieDetails(item.id) },
                     )
                 }
