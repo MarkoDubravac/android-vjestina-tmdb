@@ -32,18 +32,10 @@ import androidx.navigation.navArgument
 fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    var showBottomBar by remember {
-        mutableStateOf(false)
-    }
+    var showBottomBar by remember { mutableStateOf(false) }
     val showBackIcon = !showBottomBar
     Scaffold(
-        topBar = {
-            TopBar(
-                navigationIcon = {
-                    if (showBackIcon) BackIcon(onBackClick = navController::popBackStack)
-                },
-            )
-        },
+        topBar = { TopBar(navigationIcon = { if (showBackIcon) BackIcon(onBackClick = navController::popBackStack) }) },
         bottomBar = {
             if (showBottomBar) BottomNavigationBar(
                 destinations = listOf(
@@ -72,9 +64,7 @@ fun MainScreen() {
                     showBottomBar = true
                     HomeRoute(
                         onNavigateToMovieDetails = {
-                            navController.navigate(
-                                MovieDetailsDestination.createNavigationRoute(it)
-                            )
+                            navController.navigate(MovieDetailsDestination.createNavigationRoute(it))
                         },
                     )
                 }
@@ -82,19 +72,13 @@ fun MainScreen() {
                     showBottomBar = true
                     FavoritesRoute(
                         onNavigateToMovieDetails = {
-                            navController.navigate(
-                                MovieDetailsDestination.createNavigationRoute(it)
-                            )
+                            navController.navigate(MovieDetailsDestination.createNavigationRoute(it))
                         },
                     )
                 }
                 composable(
                     route = MovieDetailsDestination.route,
-                    arguments = listOf(
-                        navArgument(MOVIE_ID_KEY) {
-                            type = NavType.IntType
-                        },
-                    ),
+                    arguments = listOf(navArgument(MOVIE_ID_KEY) { type = NavType.IntType }),
                 ) {
                     showBottomBar = false
                     MovieDetailsRoute()
@@ -106,29 +90,20 @@ fun MainScreen() {
 
 @Composable
 private fun TopBar(
-    navigationIcon: @Composable ((
-    ) -> Unit)? = null,
+    navigationIcon: @Composable (() -> Unit)? = null,
 ) {
     Box(
         modifier = Modifier
             .background(BackgroundBlue)
             .fillMaxWidth()
-            .height(
-                dimensionResource(
-                    id = R.dimen.tob_bar_height
-                )
-            ),
+            .height(dimensionResource(id = R.dimen.tob_bar_height)),
         contentAlignment = Alignment.CenterStart,
     ) {
         navigationIcon?.invoke()
         Image(
-            painter = painterResource(
-                id = R.drawable.ic_logo
-            ),
+            painter = painterResource(id = R.drawable.ic_logo),
             contentDescription = null,
-            modifier = Modifier.align(
-                Alignment.Center
-            ),
+            modifier = Modifier.align(Alignment.Center),
         )
     }
 }
@@ -139,21 +114,11 @@ private fun BackIcon(
     modifier: Modifier = Modifier,
 ) {
     Image(
-        painter = painterResource(
-            id = R.drawable.ic_back
-        ),
-        contentDescription = stringResource(
-            id = R.string.back_icon
-        ),
+        painter = painterResource(id = R.drawable.ic_back),
+        contentDescription = stringResource(id = R.string.back_icon),
         modifier = modifier
-            .clickable {
-                onBackClick()
-            }
-            .size(
-                dimensionResource(
-                    id = R.dimen.nav_icon_size
-                )
-            )
+            .clickable { onBackClick() }
+            .size(dimensionResource(id = R.dimen.nav_icon_size))
             .padding(start = MaterialTheme.spacing.extraSmallToSmall),
         alignment = Alignment.Center,
     )
@@ -162,20 +127,14 @@ private fun BackIcon(
 @Composable
 private fun BottomNavigationBar(
     destinations: List<NavigationItem>,
-    onNavigateToDestination: (
-        NavigationItem
-    ) -> Unit,
+    onNavigateToDestination: (NavigationItem) -> Unit,
     currentDestination: NavDestination?,
 ) {
-    BottomNavigation(
-        backgroundColor = MaterialTheme.colors.background
-    ) {
+    BottomNavigation(backgroundColor = MaterialTheme.colors.background) {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(
-                    MaterialTheme.spacing.extraSmallToSmall
-                ),
+                .padding(MaterialTheme.spacing.extraSmallToSmall),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -186,22 +145,17 @@ private fun BottomNavigationBar(
                     if (currentDestination != null) {
                         Image(
                             painter = painterResource(
-                                id = if (currentDestination.route == destination.route) destination.selectedIconId
-                                else destination.unselectedIconId
+                                id = if (currentDestination.route == destination.route) destination.selectedIconId else destination.unselectedIconId
                             ),
                             contentDescription = null,
                             modifier = Modifier
                                 .size(dimensionResource(id = R.dimen.nav_icon_size))
-                                .clickable {
-                                    onNavigateToDestination(destination)
-                                },
+                                .clickable { onNavigateToDestination(destination) },
                         )
                     }
                     Text(
-                        text = stringResource(
-                            id = destination.labelId
-                        ),
-                        style = MaterialTheme.typography.h3,
+                        text = stringResource(id = destination.labelId),
+                        style = MaterialTheme.typography.h3
                     )
                 }
             }

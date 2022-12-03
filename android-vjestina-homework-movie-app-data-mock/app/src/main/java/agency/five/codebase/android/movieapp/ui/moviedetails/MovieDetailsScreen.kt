@@ -39,16 +39,8 @@ val movieDetailsViewState = movieDetailsMapper.toMovieDetailsViewState(MoviesMoc
 
 @Composable
 fun MovieDetailsRoute() {
-    val movieDetailsViewState by remember {
-        mutableStateOf(
-            movieDetailsViewState
-        )
-    }
-    MovieDetailsScreen(
-        movieDetailsViewState = movieDetailsViewState.copy(
-            isFavorite = !movieDetailsViewState.isFavorite
-        ),
-    )
+    val movieDetailsViewState by remember { mutableStateOf(movieDetailsViewState) }
+    MovieDetailsScreen(movieDetailsViewState = movieDetailsViewState.copy(isFavorite = !movieDetailsViewState.isFavorite))
 }
 
 @Composable
@@ -66,14 +58,10 @@ fun MovieDetailsScreen(
                 )
             }
             item {
-                OverviewDetails(
-                    movieDetailsViewState = movieDetailsViewState
-                )
+                OverviewDetails(movieDetailsViewState = movieDetailsViewState)
             }
             item {
-                TopBilledDetails(
-                    movieDetailsViewState = movieDetailsViewState
-                )
+                TopBilledDetails(movieDetailsViewState = movieDetailsViewState)
             }
         },
     )
@@ -108,18 +96,12 @@ fun MovieImageDetails(
                     color = Color.White,
                     modifier = Modifier
                         .wrapContentSize()
-                        .align(
-                            alignment = Alignment.CenterVertically
-                        ),
+                        .align(alignment = Alignment.CenterVertically),
                 )
             }
-            Text(
-                text = movieDetailsViewState.title,
-                style = Typography.h2, color = Color.White,
-            )
+            Text(text = movieDetailsViewState.title, style = Typography.h2, color = Color.White)
             FavoriteButton(
-                isFavorite = movieDetailsViewState.isFavorite,
-                onClick = { },
+                isFavorite = movieDetailsViewState.isFavorite, onClick = { },
             )
         }
     }
@@ -130,11 +112,7 @@ fun OverviewDetails(
     movieDetailsViewState: MovieDetailsViewState,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier.padding(
-            MaterialTheme.spacing.small
-        ),
-    ) {
+    Column(modifier = modifier.padding(MaterialTheme.spacing.small)) {
         Text(
             text = stringResource(id = R.string.overview),
             style = Typography.h3,
@@ -148,21 +126,11 @@ fun OverviewDetails(
         )
         LazyHorizontalGrid(
             rows = GridCells.Fixed(2),
-            modifier = Modifier.height(
-                dimensionResource(id = R.dimen.crew_grid_height)
-            ),
-            horizontalArrangement = Arrangement.spacedBy(
-                MaterialTheme.spacing.medium
-            ),
-            verticalArrangement = Arrangement.spacedBy(
-                MaterialTheme.spacing.medium
-            ),
+            modifier = Modifier.height(dimensionResource(id = R.dimen.crew_grid_height)),
+            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.medium),
             content = {
-                itemsIndexed(movieDetailsViewState.crew) { _, item ->
-                    CrewItem(
-                        crewItemViewState = item.crewItemViewState
-                    )
-                }
+                itemsIndexed(movieDetailsViewState.crew) { _, item -> CrewItem(crewItemViewState = item.crewItemViewState) }
             },
         )
     }
@@ -173,22 +141,11 @@ fun TopBilledDetails(
     movieDetailsViewState: MovieDetailsViewState,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier.padding(
-            MaterialTheme.spacing.small
-        ),
-    ) {
-        Text(
-            text = stringResource(id = R.string.top_billed_cast),
-            style = Typography.h3,
-        )
+    Column(modifier = modifier.padding(MaterialTheme.spacing.small)) {
+        Text(text = stringResource(id = R.string.top_billed_cast), style = Typography.h3)
         LazyRow(
-            contentPadding = PaddingValues(
-                vertical = MaterialTheme.spacing.small
-            ),
-            horizontalArrangement = Arrangement.spacedBy(
-                MaterialTheme.spacing.extraSmallToSmall
-            ),
+            contentPadding = PaddingValues(vertical = MaterialTheme.spacing.small),
+            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.extraSmallToSmall),
             content = {
                 items(movieDetailsViewState.cast.size) { index ->
                     ActorCard(
@@ -206,9 +163,5 @@ fun TopBilledDetails(
 @Preview
 @Composable
 fun MovieDetailsScreenPreview() {
-    MovieAppTheme {
-        MovieDetailsScreen(
-            movieDetailsViewState = movieDetailsViewState
-        )
-    }
+    MovieAppTheme { MovieDetailsScreen(movieDetailsViewState = movieDetailsViewState) }
 }

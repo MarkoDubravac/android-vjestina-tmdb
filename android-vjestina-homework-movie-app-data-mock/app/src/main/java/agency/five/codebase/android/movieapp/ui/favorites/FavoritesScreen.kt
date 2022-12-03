@@ -56,10 +56,7 @@ fun FavoritesScreen(
         columns = GridCells.Fixed(3),
         content = {
             item(span = { GridItemSpan(3) }) {
-                Text(
-                    text = stringResource(id = R.string.favorites),
-                    style = Typography.h3,
-                )
+                Text(text = stringResource(id = R.string.favorites), style = Typography.h3)
             }
             itemsIndexed(favoritesViewState.favoriteMovies) { _, item ->
                 MovieCard(
