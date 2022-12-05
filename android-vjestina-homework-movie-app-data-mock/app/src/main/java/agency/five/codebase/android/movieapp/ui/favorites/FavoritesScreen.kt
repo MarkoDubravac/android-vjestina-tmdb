@@ -31,9 +31,7 @@ private val favoritesMapper: FavoritesMapper = FavoritesMapperImpl()
 val favoritesViewState = favoritesMapper.toFavoritesViewState(MoviesMock.getMoviesList())
 
 @Composable
-fun FavoritesRoute(
-    onNavigateToMovieDetails: (Int) -> Unit,
-) {
+fun FavoritesRoute(onNavigateToMovieDetails: (Int) -> Unit) {
     val favoritesViewState by remember { mutableStateOf(favoritesViewState) }
     FavoritesScreen(
         favoritesViewState = favoritesViewState,
