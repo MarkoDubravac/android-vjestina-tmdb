@@ -7,11 +7,11 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val movieDetailsModule = module {
-    viewModel { id ->
+    viewModel {
         MovieDetailsViewModel(
             movieRepository = get(),
             movieDetailsMapper = get(),
-            movieId = id[0],
+            movieId = get(),
         )
     }
     single<MovieDetailsMapper> { MovieDetailsMapperImpl() }

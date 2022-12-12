@@ -1,19 +1,12 @@
 package agency.five.codebase.android.movieapp.ui.main
 
 import agency.five.codebase.android.movieapp.R
-import agency.five.codebase.android.movieapp.data.repository.FakeMovieRepository
 import agency.five.codebase.android.movieapp.navigation.MOVIE_ID_KEY
 import agency.five.codebase.android.movieapp.navigation.MovieDetailsDestination
 import agency.five.codebase.android.movieapp.navigation.NavigationItem
 import agency.five.codebase.android.movieapp.ui.favorites.FavoritesRoute
-import agency.five.codebase.android.movieapp.ui.favorites.FavoritesViewModel
-import agency.five.codebase.android.movieapp.ui.favorites.mapper.FavoritesMapperImpl
 import agency.five.codebase.android.movieapp.ui.home.HomeRoute
-import agency.five.codebase.android.movieapp.ui.home.HomeViewModel
-import agency.five.codebase.android.movieapp.ui.home.mapper.HomeScreenMapperImpl
 import agency.five.codebase.android.movieapp.ui.moviedetails.MovieDetailsRoute
-import agency.five.codebase.android.movieapp.ui.moviedetails.MovieDetailsViewModel
-import agency.five.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetailsMapperImpl
 import agency.five.codebase.android.movieapp.ui.theme.BackgroundBlue
 import agency.five.codebase.android.movieapp.ui.theme.spacing
 import androidx.compose.foundation.Image
@@ -34,9 +27,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import kotlinx.coroutines.Dispatchers
-import org.koin.androidx.compose.getViewModel
-import org.koin.core.parameter.parametersOf
 
 @Composable
 fun MainScreen() {
@@ -73,24 +63,16 @@ fun MainScreen() {
                 composable(NavigationItem.HomeDestination.route) {
                     showBottomBar = true
                     HomeRoute(
-                        viewModel = HomeViewModel(FakeMovieRepository(Dispatchers.IO), HomeScreenMapperImpl()),
-                        onNavigateToMovieDetails = { id ->
-                            navController.navigate(
-                                MovieDetailsDestination.createNavigationRoute(id)
-                            )
-                        }
+                        onNavigateToMovieDetails = {
+                            navController.navigate(MovieDetailsDestination.createNavigationRoute(it))
+                        },
                     )
                 }
                 composable(NavigationItem.FavoritesDestination.route) {
                     showBottomBar = true
                     FavoritesRoute(
-                        viewModel = FavoritesViewModel(
-                            FakeMovieRepository(Dispatchers.IO), FavoritesMapperImpl()
-                        ),
-                        onNavigateToMovieDetails = { id ->
-                            navController.navigate(
-                                MovieDetailsDestination.createNavigationRoute(id)
-                            )
+                        onNavigateToMovieDetails = {
+                            navController.navigate(MovieDetailsDestination.createNavigationRoute(it))
                         },
                     )
                 }
@@ -99,16 +81,7 @@ fun MainScreen() {
                     arguments = listOf(navArgument(MOVIE_ID_KEY) { type = NavType.IntType }),
                 ) {
                     showBottomBar = false
-                    val movieId = it.arguments?.getInt(MOVIE_ID_KEY)
-                    MovieDetailsRoute(
-                        viewModel = getViewModel {
-                            parametersOf(
-                                it.arguments?.getInt(
-                                    MOVIE_ID_KEY
-                                ) ?: throw IllegalArgumentException("No movie id found.")
-                            )
-                        }
-                    )
+                    MovieDetailsRoute()
                 }
             }
         }

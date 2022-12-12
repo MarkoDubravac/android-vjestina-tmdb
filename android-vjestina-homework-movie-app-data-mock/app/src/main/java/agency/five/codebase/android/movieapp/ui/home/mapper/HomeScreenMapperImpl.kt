@@ -26,7 +26,6 @@ class HomeScreenMapperImpl : HomeScreenMapper {
     private fun toHomeMovieViewState(movie: Movie) = HomeMovieViewState(
         id = movie.id,
         movieCardViewState = MovieCardViewState(
-            movieId = movie.id,
             imageUrl = movie.imageUrl,
             isFavorite = movie.isFavorite,
         ),

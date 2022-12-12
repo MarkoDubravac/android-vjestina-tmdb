@@ -36,13 +36,11 @@ class FakeMovieRepository(
         FavoritesDBMock.favoriteIds
             .mapLatest { favoriteIds ->
                 val movieDetails = MoviesMock.getMovieDetails(movieId)
-                if (favoriteIds.contains(movieDetails.movie.id)) movieDetails.copy(
-                    movie = movieDetails.movie.copy(
-                        isFavorite = true
-                    )
-                ) else movieDetails.copy(movie = movieDetails.movie.copy(isFavorite = false))
+                if (movieDetails.movie.isFavorite) {
+                favoriteIds.plusElement(movieId)
             }
-        .flowOn(ioDispatcher)
+            movieDetails
+        }.flowOn(ioDispatcher)
 
     override fun favoriteMovies(): Flow<List<Movie>> = movies.map {
         it.filter { fakeMovie -> fakeMovie.isFavorite }
