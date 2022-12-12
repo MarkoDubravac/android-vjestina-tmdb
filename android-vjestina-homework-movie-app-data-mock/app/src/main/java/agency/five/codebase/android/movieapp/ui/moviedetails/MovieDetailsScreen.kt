@@ -1,12 +1,11 @@
 package agency.five.codebase.android.movieapp.ui.moviedetails
 
 import agency.five.codebase.android.movieapp.R
-import agency.five.codebase.android.movieapp.mock.MoviesMock
+import agency.five.codebase.android.movieapp.data.repository.FakeMovieRepository
 import agency.five.codebase.android.movieapp.ui.component.ActorCard
 import agency.five.codebase.android.movieapp.ui.component.CrewItem
 import agency.five.codebase.android.movieapp.ui.component.FavoriteButton
 import agency.five.codebase.android.movieapp.ui.component.UserScoreProgressBar
-import agency.five.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetailsMapper
 import agency.five.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetailsMapperImpl
 import agency.five.codebase.android.movieapp.ui.theme.MovieAppTheme
 import agency.five.codebase.android.movieapp.ui.theme.Typography
@@ -20,9 +19,8 @@ import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,21 +30,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
-
-private val movieDetailsMapper: MovieDetailsMapper = MovieDetailsMapperImpl()
-
-val movieDetailsViewState = movieDetailsMapper.toMovieDetailsViewState(MoviesMock.getMovieDetails())
+import kotlinx.coroutines.Dispatchers
 
 @Composable
-fun MovieDetailsRoute() {
-    val movieDetailsViewState by remember { mutableStateOf(movieDetailsViewState) }
-    MovieDetailsScreen(movieDetailsViewState = movieDetailsViewState.copy(isFavorite = !movieDetailsViewState.isFavorite))
+fun MovieDetailsRoute(
+    viewModel: MovieDetailsViewModel,
+) {
+    val movieDetailsViewState: MovieDetailsViewState by viewModel.movieDetailsViewState.collectAsState()
+    MovieDetailsScreen(
+        movieDetailsViewState = movieDetailsViewState,
+        onFavoriteButtonClick = { viewModel.toggleFavorite((it)) },
+    )
 }
 
 @Composable
 fun MovieDetailsScreen(
     movieDetailsViewState: MovieDetailsViewState,
     modifier: Modifier = Modifier,
+    onFavoriteButtonClick: (Int) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier,
@@ -55,6 +56,7 @@ fun MovieDetailsScreen(
                 MovieImageDetails(
                     movieDetailsViewState = movieDetailsViewState,
                     modifier = Modifier.height(dimensionResource(id = R.dimen.details_screen_image_height)),
+                    onFavoriteButtonClick = onFavoriteButtonClick,
                 )
             }
             item {
@@ -71,6 +73,7 @@ fun MovieDetailsScreen(
 fun MovieImageDetails(
     movieDetailsViewState: MovieDetailsViewState,
     modifier: Modifier = Modifier,
+    onFavoriteButtonClick: (Int) -> Unit
 ) {
     Box(modifier = modifier) {
         AsyncImage(
@@ -101,7 +104,8 @@ fun MovieImageDetails(
             }
             Text(text = movieDetailsViewState.title, style = Typography.h2, color = Color.White)
             FavoriteButton(
-                isFavorite = movieDetailsViewState.isFavorite, onClick = { },
+                isFavorite = movieDetailsViewState.isFavorite,
+                onClick = { onFavoriteButtonClick(movieDetailsViewState.id) },
             )
         }
     }
@@ -149,7 +153,7 @@ fun TopBilledDetails(
             content = {
                 items(movieDetailsViewState.cast.size) { index ->
                     ActorCard(
-                        actorCardViewState = movieDetailsViewState.cast[index].actorCardViewState,
+                        actorCardViewState = movieDetailsViewState.cast[index].actorCardViewState,//ovdje
                         modifier = Modifier
                             .width(dimensionResource(id = R.dimen.actor_card_width))
                             .height(dimensionResource(id = R.dimen.actor_card_height)),
@@ -163,5 +167,11 @@ fun TopBilledDetails(
 @Preview
 @Composable
 fun MovieDetailsScreenPreview() {
-    MovieAppTheme { MovieDetailsScreen(movieDetailsViewState = movieDetailsViewState) }
+    MovieAppTheme {
+        MovieDetailsRoute(
+            viewModel = MovieDetailsViewModel(
+                FakeMovieRepository(Dispatchers.IO), MovieDetailsMapperImpl(), movieId = 1
+            )
+        )
+    }
 }
