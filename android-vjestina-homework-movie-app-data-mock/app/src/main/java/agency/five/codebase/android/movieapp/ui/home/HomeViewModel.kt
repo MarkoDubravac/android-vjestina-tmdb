@@ -13,18 +13,16 @@ class HomeViewModel(
     private val homeScreenMapper: HomeScreenMapper,
 ) : ViewModel() {
     private val initialPopularMoviesViewState =
-        movieRepository.popularMovies(MovieCategory.POPULAR_STREAMING)
-            .map { movies ->
-                homeScreenMapper.toHomeMovieCategoryViewState(
-                    listOf(
-                        MovieCategory.POPULAR_STREAMING,
-                        MovieCategory.POPULAR_ON_TV,
-                        MovieCategory.POPULAR_FOR_RENT,
-                        MovieCategory.POPULAR_IN_THEATERS,
-                    ),
-                    MovieCategory.POPULAR_STREAMING, movies
-                )
-            }
+        movieRepository.popularMovies(MovieCategory.POPULAR_STREAMING).map { movies ->
+            homeScreenMapper.toHomeMovieCategoryViewState(
+                listOf(
+                    MovieCategory.POPULAR_STREAMING,
+                    MovieCategory.POPULAR_ON_TV,
+                    MovieCategory.POPULAR_FOR_RENT,
+                    MovieCategory.POPULAR_IN_THEATERS,
+                ), MovieCategory.POPULAR_STREAMING, movies
+            )
+        }
 
     private val _selectedPopularCategoryId: MutableStateFlow<Int> = MutableStateFlow(0)
 
@@ -32,8 +30,7 @@ class HomeViewModel(
         MutableStateFlow(HomeMovieCategoryViewState(emptyList(), emptyList()))
 
     val popularMoviesViewState: StateFlow<HomeMovieCategoryViewState> = combine(
-        initialPopularMoviesViewState,
-        _selectedPopularCategoryId
+        initialPopularMoviesViewState, _selectedPopularCategoryId
     ) { initialPopularMoviesViewState, selectedCategoryId ->
         val movieCategories = initialPopularMoviesViewState.movieCategories.map {
             it.copy(isSelected = selectedCategoryId == it.id)
@@ -42,16 +39,14 @@ class HomeViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, _popularMoviesViewState.value)
 
     private val initialNowPlayingMoviesViewState =
-        movieRepository.popularMovies(MovieCategory.PLAYING_MOVIES)
-            .map { movies ->
-                homeScreenMapper.toHomeMovieCategoryViewState(
-                    listOf(
-                        MovieCategory.PLAYING_MOVIES,
-                        MovieCategory.PLAYING_TV,
-                    ),
-                    MovieCategory.PLAYING_MOVIES, movies
-                )
-            }
+        movieRepository.popularMovies(MovieCategory.PLAYING_MOVIES).map { movies ->
+            homeScreenMapper.toHomeMovieCategoryViewState(
+                listOf(
+                    MovieCategory.PLAYING_MOVIES,
+                    MovieCategory.PLAYING_TV,
+                ), MovieCategory.PLAYING_MOVIES, movies
+            )
+        }
 
     private val _selectedNowPlayingPopularCategoryId: MutableStateFlow<Int> = MutableStateFlow(4)
 
@@ -59,8 +54,7 @@ class HomeViewModel(
         MutableStateFlow(HomeMovieCategoryViewState(emptyList(), emptyList()))
 
     val nowPlayingMoviesViewState: StateFlow<HomeMovieCategoryViewState> = combine(
-        initialNowPlayingMoviesViewState,
-        _selectedNowPlayingPopularCategoryId
+        initialNowPlayingMoviesViewState, _selectedNowPlayingPopularCategoryId
     ) { initialNowPlayingMoviesViewState, selectedCategoryId ->
         val movieCategories = initialNowPlayingMoviesViewState.movieCategories.map {
             it.copy(isSelected = selectedCategoryId == it.id)
@@ -69,16 +63,14 @@ class HomeViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, _nowPlayingMoviesViewState.value)
 
     private val initialUpcomingMoviesViewState =
-        movieRepository.popularMovies(MovieCategory.UPCOMING_TODAY)
-            .map { movies ->
-                homeScreenMapper.toHomeMovieCategoryViewState(
-                    listOf(
-                        MovieCategory.UPCOMING_TODAY,
-                        MovieCategory.UPCOMING_THIS_WEEK,
-                    ),
-                    MovieCategory.UPCOMING_TODAY, movies
-                )
-            }
+        movieRepository.popularMovies(MovieCategory.UPCOMING_TODAY).map { movies ->
+            homeScreenMapper.toHomeMovieCategoryViewState(
+                listOf(
+                    MovieCategory.UPCOMING_TODAY,
+                    MovieCategory.UPCOMING_THIS_WEEK,
+                ), MovieCategory.UPCOMING_TODAY, movies
+            )
+        }
 
     private val _selectedUpcomingPopularCategoryId: MutableStateFlow<Int> = MutableStateFlow(6)
 
@@ -86,8 +78,7 @@ class HomeViewModel(
         MutableStateFlow(HomeMovieCategoryViewState(emptyList(), emptyList()))
 
     val upcomingMoviesViewState: StateFlow<HomeMovieCategoryViewState> = combine(
-        initialUpcomingMoviesViewState,
-        _selectedUpcomingPopularCategoryId
+        initialUpcomingMoviesViewState, _selectedUpcomingPopularCategoryId
     ) { initialUpcomingMoviesViewState, selectedCategoryId ->
         val movieCategories = initialUpcomingMoviesViewState.movieCategories.map {
             it.copy(isSelected = selectedCategoryId == it.id)
@@ -97,7 +88,6 @@ class HomeViewModel(
 
     fun changeCategory(categoryId: Int) {
         when (categoryId) {
-
             in 0..3 -> {
                 _selectedPopularCategoryId.value = categoryId
             }
@@ -111,9 +101,6 @@ class HomeViewModel(
     }
 
     fun toggleFavorite(movieId: Int) {
-        viewModelScope.launch {
-            movieRepository.toggleFavorite(movieId)
-        }
+        viewModelScope.launch { movieRepository.toggleFavorite(movieId) }
     }
-
 }
