@@ -27,6 +27,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun MainScreen() {
@@ -62,17 +64,20 @@ fun MainScreen() {
             ) {
                 composable(NavigationItem.HomeDestination.route) {
                     showBottomBar = true
-                    HomeRoute(
-                        onNavigateToMovieDetails = {
-                            navController.navigate(MovieDetailsDestination.createNavigationRoute(it))
-                        },
-                    )
+                    HomeRoute(viewModel = getViewModel(), onNavigateToMovieDetails = { id ->
+                        navController.navigate(
+                            MovieDetailsDestination.createNavigationRoute(id)
+                        )
+                    })
                 }
                 composable(NavigationItem.FavoritesDestination.route) {
                     showBottomBar = true
                     FavoritesRoute(
-                        onNavigateToMovieDetails = {
-                            navController.navigate(MovieDetailsDestination.createNavigationRoute(it))
+                        viewModel = getViewModel(),
+                        onNavigateToMovieDetails = { id ->
+                            navController.navigate(
+                                MovieDetailsDestination.createNavigationRoute(id)
+                            )
                         },
                     )
                 }
@@ -81,7 +86,15 @@ fun MainScreen() {
                     arguments = listOf(navArgument(MOVIE_ID_KEY) { type = NavType.IntType }),
                 ) {
                     showBottomBar = false
-                    MovieDetailsRoute()
+                    MovieDetailsRoute(
+                        viewModel = getViewModel {
+                            parametersOf(
+                                it.arguments?.getInt(
+                                    MOVIE_ID_KEY
+                                ) ?: throw IllegalArgumentException("No movie id found.")
+                            )
+                        },
+                    )
                 }
             }
         }
