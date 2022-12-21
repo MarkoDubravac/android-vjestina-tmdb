@@ -1,9 +1,7 @@
 package agency.five.codebase.android.movieapp.ui.favorites
 
 import agency.five.codebase.android.movieapp.R
-import agency.five.codebase.android.movieapp.data.repository.FakeMovieRepository
 import agency.five.codebase.android.movieapp.ui.component.MovieCard
-import agency.five.codebase.android.movieapp.ui.favorites.mapper.FavoritesMapperImpl
 import agency.five.codebase.android.movieapp.ui.theme.MovieAppTheme
 import agency.five.codebase.android.movieapp.ui.theme.Typography
 import agency.five.codebase.android.movieapp.ui.theme.spacing
@@ -23,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun FavoritesRoute(
@@ -70,8 +67,6 @@ fun FavoritesScreen(
 @Composable
 fun FavoritesScreenPreview() {
     MovieAppTheme {
-        FavoritesRoute(viewModel = FavoritesViewModel(
-            FakeMovieRepository(Dispatchers.IO), FavoritesMapperImpl()
-        ), onNavigateToMovieDetails = { })
+
     }
 }

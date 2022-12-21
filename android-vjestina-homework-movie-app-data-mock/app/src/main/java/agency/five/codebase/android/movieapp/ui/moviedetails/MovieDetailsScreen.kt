@@ -1,12 +1,10 @@
 package agency.five.codebase.android.movieapp.ui.moviedetails
 
 import agency.five.codebase.android.movieapp.R
-import agency.five.codebase.android.movieapp.data.repository.FakeMovieRepository
 import agency.five.codebase.android.movieapp.ui.component.ActorCard
 import agency.five.codebase.android.movieapp.ui.component.CrewItem
 import agency.five.codebase.android.movieapp.ui.component.FavoriteButton
 import agency.five.codebase.android.movieapp.ui.component.UserScoreProgressBar
-import agency.five.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetailsMapperImpl
 import agency.five.codebase.android.movieapp.ui.theme.MovieAppTheme
 import agency.five.codebase.android.movieapp.ui.theme.Typography
 import agency.five.codebase.android.movieapp.ui.theme.spacing
@@ -30,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
-import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun MovieDetailsRoute(
@@ -168,10 +165,6 @@ fun TopBilledDetails(
 @Composable
 fun MovieDetailsScreenPreview() {
     MovieAppTheme {
-        MovieDetailsRoute(
-            viewModel = MovieDetailsViewModel(
-                FakeMovieRepository(Dispatchers.IO), MovieDetailsMapperImpl(), movieId = 1
-            )
-        )
+
     }
 }

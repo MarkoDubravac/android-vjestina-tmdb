@@ -1,10 +1,8 @@
 package agency.five.codebase.android.movieapp.ui.home
 
 import agency.five.codebase.android.movieapp.R
-import agency.five.codebase.android.movieapp.data.repository.FakeMovieRepository
 import agency.five.codebase.android.movieapp.ui.component.MovieCard
 import agency.five.codebase.android.movieapp.ui.component.MovieCategoryLabel
-import agency.five.codebase.android.movieapp.ui.home.mapper.HomeScreenMapperImpl
 import agency.five.codebase.android.movieapp.ui.theme.MovieAppTheme
 import agency.five.codebase.android.movieapp.ui.theme.Typography
 import agency.five.codebase.android.movieapp.ui.theme.spacing
@@ -21,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import kotlinx.coroutines.Dispatchers
 
 @Composable
 fun HomeRoute(
@@ -128,9 +125,6 @@ fun MoviesInCategory(
 @Composable
 fun HomeScreenPreview() {
     MovieAppTheme {
-        HomeRoute(
-            viewModel = HomeViewModel(FakeMovieRepository(Dispatchers.IO), HomeScreenMapperImpl()),
-            onNavigateToMovieDetails = {},
-        )
+
     }
 }
