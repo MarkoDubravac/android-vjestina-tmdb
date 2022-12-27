@@ -13,7 +13,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 
-class MovieRepositoryImpl(
+internal class MovieRepositoryImpl(
     private val movieService: MovieService,
     private val movieDao: FavoriteMovieDao,
     private val bgDispatcher: CoroutineDispatcher,
@@ -85,30 +85,31 @@ class MovieRepositoryImpl(
         runBlocking(bgDispatcher) {
             movieDao.insertMovie(
                 DbFavoriteMovie(
-                    movieId,
-                    "$BASE_IMAGE_URL/${movieService.fetchMovieDetails(movieId).poster_path}"
+                    id = movieId, posterUrl = "$BASE_IMAGE_URL/${findMovie(movieId)?.imageUrl}"
                 )
             )
         }
     }
 
     private suspend fun findMovie(movieId: Int): Movie? {
-        var movie: Movie? = null
         moviesByCategory.values.forEach { value ->
             val movies = value.first()
             movies.forEach {
                 if (it.id == movieId) {
-                    movie = it
+                    return it
                 }
             }
-
         }
-        return movie
+        return null
     }
 
     override suspend fun removeMovieFromFavorites(movieId: Int) {
         runBlocking(bgDispatcher) {
-            movieDao.delete(movieId)
+            movieDao.delete(
+                DbFavoriteMovie(
+                    id = movieId, posterUrl = "$BASE_IMAGE_URL/${findMovie(movieId)?.imageUrl}"
+                )
+            )
         }
     }
 

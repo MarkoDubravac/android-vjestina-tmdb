@@ -11,7 +11,7 @@ const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 private const val BASE_URL = "https://api.themoviedb.org/3"
 private const val API_KEY = "da8a17106e7ca013dd7b54ed7a3a10f2"
 
-class MovieServiceImpl(private val client: HttpClient): MovieService{
+internal class MovieServiceImpl(private val client: HttpClient): MovieService{
     override suspend fun fetchPopularMovies(): MovieResponse {
         return client.get("$BASE_URL/movie/popular?api_key=$API_KEY").body()
     }
