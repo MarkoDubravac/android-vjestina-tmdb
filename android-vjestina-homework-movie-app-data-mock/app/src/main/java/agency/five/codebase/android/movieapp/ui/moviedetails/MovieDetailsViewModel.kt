@@ -13,16 +13,23 @@ class MovieDetailsViewModel(
     movieDetailsMapper: MovieDetailsMapper,
     movieId: Int
 ) : ViewModel() {
-    private val _movieDetailsViewState = MutableStateFlow(
-        movieDetailsMapper.toMovieDetailsViewState(
-            MoviesMock.getMovieDetails(movieId)
-        )
-    )
     val movieDetailsViewState: StateFlow<MovieDetailsViewState> =
         movieRepository.movieDetails(movieId)
             .map { movies -> movieDetailsMapper.toMovieDetailsViewState(movies) }
-            .stateIn(viewModelScope, SharingStarted.Eagerly, _movieDetailsViewState.value)
-
+            .stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(1000L),
+                MovieDetailsViewState(
+                    id = 0,
+                    imageUrl = "temp",
+                    voteAverage = 9.5F,
+                    title = "",
+                    overview = "",
+                    isFavorite = false,
+                    crew = listOf(),
+                    cast = listOf()
+                )
+            )
     fun toggleFavorite(movieId: Int){
         viewModelScope.launch{
             movieRepository.toggleFavorite(movieId)

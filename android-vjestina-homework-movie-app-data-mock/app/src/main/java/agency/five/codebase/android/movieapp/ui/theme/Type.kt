@@ -33,7 +33,7 @@ val Typography = Typography(
     ),
     button = TextStyle(
         color = Color.Black,
-        fontSize = 20.sp,
+        fontSize = 12.sp,
         fontWeight = FontWeight.Bold
     ),
     /* Other default text styles to override

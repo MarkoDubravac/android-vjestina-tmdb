@@ -13,7 +13,7 @@ class HomeViewModel(
     private val homeScreenMapper: HomeScreenMapper,
 ) : ViewModel() {
     private val initialPopularMoviesViewState =
-        movieRepository.popularMovies(MovieCategory.POPULAR_STREAMING).map { movies ->
+        movieRepository.movies(MovieCategory.POPULAR_STREAMING).map { movies ->
             homeScreenMapper.toHomeMovieCategoryViewState(
                 listOf(
                     MovieCategory.POPULAR_STREAMING,
@@ -39,7 +39,7 @@ class HomeViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, _popularMoviesViewState.value)
 
     private val initialNowPlayingMoviesViewState =
-        movieRepository.popularMovies(MovieCategory.PLAYING_MOVIES).map { movies ->
+        movieRepository.movies(MovieCategory.PLAYING_MOVIES).map { movies ->
             homeScreenMapper.toHomeMovieCategoryViewState(
                 listOf(
                     MovieCategory.PLAYING_MOVIES,
@@ -63,7 +63,7 @@ class HomeViewModel(
     }.stateIn(viewModelScope, SharingStarted.Eagerly, _nowPlayingMoviesViewState.value)
 
     private val initialUpcomingMoviesViewState =
-        movieRepository.popularMovies(MovieCategory.UPCOMING_TODAY).map { movies ->
+        movieRepository.movies(MovieCategory.UPCOMING_TODAY).map { movies ->
             homeScreenMapper.toHomeMovieCategoryViewState(
                 listOf(
                     MovieCategory.UPCOMING_TODAY,

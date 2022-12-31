@@ -39,7 +39,7 @@ fun UserScoreProgressBar(
 
     var animationPlayed by remember { mutableStateOf(false) }
     val curPercentage = animateFloatAsState(
-        targetValue = if (animationPlayed) score else 0f, animationSpec = tween(
+        targetValue = if (animationPlayed) (score/10) else 0f, animationSpec = tween(
             durationMillis = animDuration
         )
     )
@@ -58,14 +58,15 @@ fun UserScoreProgressBar(
             drawArc(
                 color = color,
                 startAngle = STARTING_POSITION_OF_CIRCLE,
-                sweepAngle = DEGREES_IN_CIRCLE * curPercentage.value,
+                sweepAngle = DEGREES_IN_CIRCLE * (curPercentage.value),
                 useCenter = false,
                 style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
             )
         }
         Text(
-            text = (score * PERCENTAGE_FACTOR).toString(),
+            text = ((score/10) * PERCENTAGE_FACTOR).toString(),
             style = Typography.button,
+            maxLines = 1,
             color = textColor
         )
     }
