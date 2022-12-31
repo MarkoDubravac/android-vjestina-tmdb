@@ -14,6 +14,6 @@ interface FavoriteMovieDao {
     @Insert
     fun insertMovie(movie: DbFavoriteMovie)
 
-    @Delete
-    fun delete(movie: DbFavoriteMovie)
+    @Query("DELETE FROM favoriteMovieTB WHERE id = :movieId")
+    fun delete(movieId: Int)
 }

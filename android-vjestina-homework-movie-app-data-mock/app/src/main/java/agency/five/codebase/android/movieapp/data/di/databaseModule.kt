@@ -12,7 +12,7 @@ val databaseModule = module {
             androidApplication(),
             MovieAppDatabase::class.java,
             APP_DATABASE_NAME,
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
     single {
         get<MovieAppDatabase>().favoriteMovieDao()

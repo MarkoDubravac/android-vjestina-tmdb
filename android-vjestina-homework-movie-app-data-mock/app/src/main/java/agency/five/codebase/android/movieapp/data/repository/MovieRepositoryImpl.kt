@@ -105,18 +105,13 @@ internal class MovieRepositoryImpl(
 
     override suspend fun removeMovieFromFavorites(movieId: Int) {
         runBlocking(bgDispatcher) {
-            movieDao.delete(
-                DbFavoriteMovie(
-                    id = movieId, posterUrl = "$BASE_IMAGE_URL/${findMovie(movieId)?.imageUrl}"
-                )
-            )
+            movieDao.delete(movieId)
         }
     }
 
     override suspend fun toggleFavorite(movieId: Int) {
         runBlocking(bgDispatcher) {
-            val movie = findMovie(movieId)
-            if (movie?.isFavorite == true) {
+            if (favorites.first().map(Movie::id).contains(movieId)) {
                 removeMovieFromFavorites(movieId)
             } else {
                 addMovieToFavorites(movieId)
